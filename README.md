@@ -70,3 +70,7 @@ The pipeline design is built upon the following operational assumptions:
 - **Memory Constraints for Broadcast Joins:** The explicit performance optimization applied in Task 6 using the `/*+ BROADCAST(r) */` hint relies entirely on the fact that the dimension tables (e.g., `gold_sales_region`) are small enough to fit comfortably into the memory of every working node. If these dimensions scale past the physical memory barrier, this operation will trigger an `OutOfMemoryError`.
 - **System Policy Restrictions (Unity Catalog):** Because the pipeline operates inside a secured, shared environment governed by Databricks Unity Catalog, global runtime variables (such as `spark.sql.autoBroadcastJoinThreshold`) are strictly immutable. Execution plans must therefore be manually optimized and guided via inline query hints rather than global configurations.
 - **Lack of Historical Versioning (SCD Type 1 Behavior):** The Silver layer updates changed records in-place. If a customer changes their geographic `region`, the `MERGE` query replaces the historical value, which means the pipeline currently lacks Slowly Changing Dimension (SCD Type 2) tracking to report where that user lived at the exact moment of an older purchase.
+
+
+## Dashboard
+<img width="885" height="713" alt="Screenshot 2026-07-08 at 17 27 33" src="https://github.com/user-attachments/assets/4a730219-531e-423f-9dc9-13f6201941e4" />
